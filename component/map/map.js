@@ -1,5 +1,6 @@
 let select_date = '2012-01-08';
 const CITY = ["臺北市", "嘉義市", "新竹市", "基隆市", "新北市", "桃園市", "臺中市", "彰化縣", "高雄市", "臺南市", "金門縣", "澎湖縣", "雲林縣", "連江縣", "新竹縣", "苗栗縣", "屏東縣", "嘉義縣", "宜蘭縣", "南投縣", "花蓮縣", "臺東縣"];
+const DATA_FILE = "data/週成交量_小白菜-土白菜_市場.csv";
 
 $(document).ready(function() {
 
@@ -7,7 +8,7 @@ $(document).ready(function() {
     var density = {};
     var value_max, value_min;
 
-    d3.csv("data/週成交量_小白菜-土白菜_市場.csv", function(error, csv) {
+    d3.csv(DATA_FILE, function(error, csv) {
         if (error) throw error;
 
         csv.forEach(r => {
