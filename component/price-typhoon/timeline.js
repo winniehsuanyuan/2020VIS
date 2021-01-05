@@ -1,4 +1,4 @@
-d3.csv("typhoon.csv")
+d3.csv("data/typhoon.csv")
     .then(csv_data => {
         let chart = d3.timeline();
 

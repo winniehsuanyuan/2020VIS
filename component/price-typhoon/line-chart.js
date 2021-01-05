@@ -1,7 +1,7 @@
-var rawDataURL = 'crop/香蕉_avg.csv';
-var xField = 'DateTime';
-var yField = '平均價';
-var vField = '交易量';
+// var rawDataURL = 'data/香蕉_avg.csv';
+// var xField = 'DateTime';
+// var yField = '平均價';
+// var vField = '交易量';
 
 var selectorOptions = {
     buttons: [{
@@ -32,7 +32,7 @@ var selectorOptions = {
 Plotly.d3.csv(rawDataURL, function(err, rawData) {
     if (err) throw err;
 
-    var data = prepData(rawData);
+    var data = prepDataAll(rawData);
     var layout = {
         title: '香蕉 - 平均價',
         xaxis: {},
@@ -48,12 +48,12 @@ Plotly.d3.csv(rawDataURL, function(err, rawData) {
         },
     };
 
-    Plotly.plot('graph', data, layout, { showSendToCloud: true });
+    Plotly.plot('all-year-graph', data, layout, { showSendToCloud: true });
 });
 
 
 
-function prepData(rawData) {
+function prepDataAll(rawData) {
     var x = [];
     var y = [];
     var v = [];
