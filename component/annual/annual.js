@@ -1,4 +1,4 @@
-var rawDataURL = 'crop/香蕉_avg.csv';
+var rawDataURL = 'data/香蕉_avg.csv';
 var xField = 'DateTime';
 var yField = '平均價';
 var vField = '交易量';
@@ -64,8 +64,8 @@ Plotly.d3.csv(rawDataURL, function(err, rawData) {
 
     console.log(line_data)
 
-    Plotly.newPlot('myDiv', traces, polar_layout);
-    Plotly.newPlot('graph', line_data, line_layout, { showSendToCloud: true });
+    Plotly.newPlot('annual-polar', traces, polar_layout);
+    Plotly.newPlot('annual-line', line_data, line_layout, { showSendToCloud: true });
 });
 
 function prepData(rawData) {
