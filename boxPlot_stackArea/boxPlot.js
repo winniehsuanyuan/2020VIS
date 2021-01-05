@@ -21,7 +21,7 @@
     });
 
     data = data.filter(function(d){
-      if((d.DateTime > start_time) && (d.DateTime < end_time))
+      if((d.DateTime >= start_time) && (d.DateTime <= end_time))
         return true;
       else
         return false;
