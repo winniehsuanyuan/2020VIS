@@ -62,8 +62,6 @@ Plotly.d3.csv(rawDataURL, function(err, rawData) {
         }
     };
 
-    console.log(line_data)
-
     Plotly.newPlot('annual-polar', traces, polar_layout);
     Plotly.newPlot('annual-line', line_data, line_layout, { showSendToCloud: true });
 });
