@@ -3,32 +3,6 @@
 // var yField = '平均價';
 // var vField = '交易量';
 
-var selectorOptions = {
-    buttons: [{
-        step: 'month',
-        stepmode: 'backward',
-        count: 1,
-        label: '1m'
-    }, {
-        step: 'month',
-        stepmode: 'backward',
-        count: 6,
-        label: '6m'
-    }, {
-        step: 'year',
-        stepmode: 'todate',
-        count: 1,
-        label: 'YTD'
-    }, {
-        step: 'year',
-        stepmode: 'backward',
-        count: 1,
-        label: '1y'
-    }, {
-        step: 'all',
-    }],
-};
-
 Plotly.d3.csv(rawDataURL, function(err, rawData) {
     if (err) throw err;
 
@@ -50,8 +24,6 @@ Plotly.d3.csv(rawDataURL, function(err, rawData) {
 
     Plotly.plot('all-year-graph', data, layout, { showSendToCloud: true });
 });
-
-
 
 function prepDataAll(rawData) {
     var x = [];
@@ -87,4 +59,8 @@ function prepDataAll(rawData) {
     }
 
     return [price_data, volume_data];
+}
+
+function update_all_year_plot(start, end) {
+    Plotly.relayout('all-year-graph', 'xaxis.range', [start, end]);
 }
