@@ -3,5 +3,6 @@ $(document).ready(function() {
         let start = data.values.min;
         let end = data.values.max;
         update_all_year_plot(start, end)
+        plot_typhoon(start, end)
     });
 });
