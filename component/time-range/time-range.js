@@ -1,17 +1,20 @@
 $(document).ready(function() {
-    $("#slider").dateRangeSlider({
+    $("#time-slider").dateRangeSlider({
         bounds: {
             min: new Date(2012, 0, 1),
             max: new Date(2019, 11, 31)
         },
         defaultValues: {
-            min: new Date(2012, 5, 1),
-            max: new Date(2013, 10, 10)
+            min: new Date(2012, 0, 1),
+            max: new Date(2019, 11, 31)
         }
     });
 
-    $("#slider").bind("valuesChanged", function(e, data) {
-        let msg = "Values just changed. min: " + data.values.min + " max: " + data.values.max;
-        alert(msg);
+    /* === time-slider update event ===
+    $("#time-slider").bind("valuesChanged", function(e, data) {
+        let start = data.values.min;
+        let end = data.values.max;
+        ...
     });
+    */
 });
