@@ -5,5 +5,6 @@ $(document).ready(function() {
         update_all_year_plot(start, end);
         plot_typhoon(start, end);
         plot_stack(start, end);
+        plot_box(start, end);
     });
 });
