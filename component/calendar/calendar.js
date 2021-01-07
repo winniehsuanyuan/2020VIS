@@ -1,5 +1,5 @@
-CALENDAR_START_YEAR = 2014,
-    CALENDAR_END_YEAR = 2017;
+CALENDAR_START_YEAR = 2016,
+CALENDAR_END_YEAR = 2017;
 
 var cal_width = 960,
     cal_height = 136,
@@ -9,9 +9,9 @@ var percent = d3.format(".1%"),
     cal_format = d3.timeFormat("%Y-%m-%d");
 
 var month_label_pos = {};
-var data_year = [2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020];
-for (let i = 0; i < data_year.length; i++) {
-    month_label_pos[data_year[i]] = new Array();
+var cal_data_year = [2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020];
+for (let i = 0; i < cal_data_year.length; i++) {
+    month_label_pos[cal_data_year[i]] = new Array();
 }
 var prev_pos = 0,
     cur_pos = 0;
@@ -23,7 +23,7 @@ var cal_svg = d3.select("#calendar-div")
     .attr("height", cal_height)
     .attr("class", "RdYlGn")
     .append("g")
-    .attr("transform", "translate(" + ((cal_width - cal_cellSize * 53) / 2) + "," + (cal_height - cal_cellSize * 7 - 1) + ")");
+    .attr("transform", "translate(" + ((cal_width - cal_cellSize * 53+50) / 2) + "," + (cal_height - cal_cellSize * 7 - 1) + ")");
 
 cal_svg.append("text")
     .attr("transform", "translate(-6," + cal_cellSize * 3.5 + ")rotate(-90)")
@@ -39,6 +39,7 @@ var cal_rect = cal_svg.selectAll(".day")
     .attr("height", cal_cellSize)
     .attr("x", function(d) { return d3.timeWeek.count(d3.timeYear(d), d) * cal_cellSize; })
     .attr("y", function(d) { return d.getDay() * cal_cellSize; })
+    .attr("fill", "#fff")
     .datum(cal_format);
 
 cal_rect.append("title")
@@ -51,40 +52,47 @@ cal_svg.selectAll(".month")
     .attr("class", genMonthClass)
     .attr("d", monthPath);
 
-d3.csv("data/香蕉_avg.csv")
+d3.csv("data/香蕉_cal.csv")
     .then(csv => {
         let value_max = 0,
             value_min = 10000;
 
-        let data = d3.nest()
+        let cal_data = d3.nest()
             .key(function(d) { return d['DateTime']; })
+            
             .rollup(function(d) {
+                /*
                 let value = d[0]['平均價']
                 if (value >= value_max) {
                     value_max = value;
                 }
                 if (value <= value_min) {
                     value_min = value;
-                }
-                return value;
+                }*/
+                //let value = d[0]['color'];
+                return {'color': d[0]['color'], 'price': +d[0]['平均價']};
+                //console.log(d);
             })
             .map(csv);
 
+        /*
         let color = d3.scaleQuantize()
             .domain([value_min, value_max])
             .range(d3.range(11).map(function(d) {
                 return "q" + d + "-11";
             }));
-
-        console.log('data', data);
-
-        cal_rect.filter(function(d) { return data.has(d); })
-            .attr("class", function(d) { return "day " + color(data.get(d)); })
-            .select("title")
-            .text(function(d) { return d + " : " + String(Math.round(data.get(d))) + " 元"; });
+        
+        //console.log('cal_data', cal_data);
+        */
+        cal_rect.filter(function(d) { return cal_data.has(d); })
+            //.attr("class", function(d) { return "day " + color(cal_data.get(d)); })
+            .attr("fill", function(d) { return cal_data.get(d).color; });
+            //.select("title");
+            //.text(function(d) { return d + " : " + String(Math.round(cal_data.get(d))) + " 元"; });
     })
     .catch(error => {
         console.log(error);
+
     })
 
 function genMonthClass(t0) {
@@ -111,7 +119,7 @@ function monthPath(t0) {
         "H" + (w0 + 1) * cal_cellSize + "Z";
 }
 
-
+/*
 // --------------------------
 // Legend
 // --------------------------
@@ -153,7 +161,7 @@ svgContainer.append("text")
     .text("價格高")
     .attr("class", "calendar-legend-label")
 
-
+*/
 // ---------------------------
 month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 cal_used_year = [];

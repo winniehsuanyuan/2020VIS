@@ -1,12 +1,14 @@
 /*for 309551091.html*/
 (function (d3) {
   'use strict';
-  const svg = d3.select('svg');
-  const width = +svg.attr('width');
-  const height = +svg.attr('height');
-  const margin = { top: 50, right: 50, bottom: 100, left: 50 };//left150
-  const innerWidth = width - margin.left - margin.right;
-  const innerHeight = height - margin.top - margin.bottom; 
+  const pcp_width = 960;
+  const pcp_height = 350;
+  const svg = d3.select('#pcp-div').append('svg')
+    .attr('width', pcp_width)
+    .attr('height', pcp_height);
+  const margin = { top: 30, right: 50, bottom: 30, left: 0 };//left150
+  const innerWidth = pcp_width - margin.left - margin.right;
+  const innerHeight = pcp_height - margin.top - margin.bottom; 
   const color = ['rgba(255, 0, 0, 0.3)', 'rgba(255, 128, 0, 0.2)', 'rgba(255, 255, 0, 0.2)', 'rgba(0, 255, 0, 0.2)', 'rgba(34, 139, 34, 0.2)', 'rgba(135, 206, 235, 0.2)', 'rgba(0, 0, 255, 0.2)', 'rgba(139, 0, 255, 0.2)'];
   const price = ['<18','18-20', '21-23', '24-26', '27-29', '30-32','33-35','>35'];
   const className = ['c1','c2','c3','c4','c5', 'c6','c7','c8']; //for hover
@@ -20,18 +22,18 @@
   const g = svg.append('g')
        .attr('transform', `translate(${margin.left},${margin.top})`);
   
-  //read data
-  d3.csv('data/香蕉/2017/_氣壓.csv')
-    .then(data => {
+  //read pcp_data
+  d3.csv('data/weather/香蕉/2017/_氣壓.csv')
+    .then(pcp_data => {
       //delete rows with missing value
       /*
-      data = data.filter(function(d){
+      pcp_data = pcp_data.filter(function(d){
         if(d['class']==undefined) 
           return false;
         else
           return true;})
       */
-      const min_max = d3.extent(data, d => +d['平均價']);
+      const min_max = d3.extent(pcp_data, d => +d['平均價']);
       const k = Math.floor((min_max[1] - min_max[0])/8);
       const priceClass = (d) => {
         if (d<(min_max[0]+k)) return className[0];
@@ -71,7 +73,7 @@
       for (let i in dimensions) {
         let yName = dimensions[i]; 
         yAxis[yName] = d3.scaleLinear()
-                       .domain( d3.extent(data, d => +d[yName]) )
+                       .domain( d3.extent(pcp_data, d => +d[yName]) )
                        .range([innerHeight, 0])
                        .nice();
       }
@@ -92,7 +94,7 @@
 
       //draw lines
       var lineCoor = d => d3.line()(dimensions.map( p => [ xCoor(p), yAxis[p](d[p]) ] ));  //take a row of the csv as input, and return [x, y]
-      var lines = g.selectAll('path').data(data)
+      var lines = g.selectAll('path').data(pcp_data)
       .enter().append('path')
         .attr('class', d => 'line ' + priceClass(+d['平均價']))
         .attr('d',  lineCoor)

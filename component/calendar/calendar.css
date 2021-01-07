@@ -3,7 +3,7 @@ body {
 }
 
 .day {
-    fill: #fff;
+    /*fill: #fff;*/
     stroke: #ccc;
 }
 
@@ -12,7 +12,7 @@ body {
     stroke: #000;
     stroke-width: 2px;
 }
-
+/*
 .RdYlGn .q10-11 {
     fill: rgb(165, 0, 38)
 }
@@ -55,7 +55,7 @@ body {
 
 .RdYlGn .q0-11 {
     fill: rgb(0, 104, 55)
-}
+}*/
 
 #legend {
     margin-bottom: 2vh;
