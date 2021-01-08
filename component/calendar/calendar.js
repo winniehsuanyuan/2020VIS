@@ -1,6 +1,6 @@
-CALENDAR_START_YEAR = 2016,
-CALENDAR_END_YEAR = 2017;
-
+function plot_calendar(crop, year){
+CALENDAR_START_YEAR = int(year),
+CALENDAR_END_YEAR = int(year)+1;
 var cal_width = 960,
     cal_height = 136,
     cal_cellSize = 17; // cell size
@@ -52,7 +52,7 @@ cal_svg.selectAll(".month")
     .attr("class", genMonthClass)
     .attr("d", monthPath);
 
-d3.csv("data/香蕉_cal.csv")
+d3.csv("data/香蕉_cal.csv")//////change read data
     .then(csv => {
         let value_max = 0,
             value_min = 10000;
@@ -198,4 +198,5 @@ for (var j = 0; j < days.length; j++) {
         .attr("dy", y)
         .attr("dx", cal_width - 30)
         .text(days[j]);
+}
 }
