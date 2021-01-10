@@ -1,5 +1,5 @@
 
-body {
+/*body {
   margin: 0px;
   overflow: hidden;
 }
@@ -15,26 +15,16 @@ body {
 }
 
 svg{
-  /*margin-left: auto;
+  margin-left: auto;
   margin-right: auto;
-  display: block;*/
-}
+  display: block;
+}*/
 
 text {
   font-family: sans-serif;
   fill: black;
   opacity: 0.85;
 }
-/*
-.legend text{
-  font-size: 17px;
-  fill: #5B5B5B;
-  alignment-baseline: middle;
-}
-
-.legend polyline{
-  stroke-width: 2.75px;
-}*/
 
 .line{
   fill: none;
@@ -59,4 +49,14 @@ text {
 
 .tick text {
   font-size: 11px;
+}
+#img-div {
+  position: relative;
+  top: 30px;
+  left: 10px;
+}
+#imgCanvas {
+  position: absolute;
+  left: 12px;
+  top: 0px;
 }

@@ -1,6 +1,10 @@
+$(document).ready(function() {
+    plot_calendar('香蕉', '2017');
+});
 function plot_calendar(crop, year){
-CALENDAR_START_YEAR = int(year),
-CALENDAR_END_YEAR = int(year)+1;
+$("#calendar-div").empty();
+CALENDAR_START_YEAR = parseInt(year)-1,
+CALENDAR_END_YEAR = parseInt(year);
 var cal_width = 960,
     cal_height = 136,
     cal_cellSize = 17; // cell size
@@ -61,29 +65,10 @@ d3.csv("data/香蕉_cal.csv")//////change read data
             .key(function(d) { return d['DateTime']; })
             
             .rollup(function(d) {
-                /*
-                let value = d[0]['平均價']
-                if (value >= value_max) {
-                    value_max = value;
-                }
-                if (value <= value_min) {
-                    value_min = value;
-                }*/
-                //let value = d[0]['color'];
                 return {'color': d[0]['color'], 'price': +d[0]['平均價']};
-                //console.log(d);
             })
             .map(csv);
 
-        /*
-        let color = d3.scaleQuantize()
-            .domain([value_min, value_max])
-            .range(d3.range(11).map(function(d) {
-                return "q" + d + "-11";
-            }));
-        
-        //console.log('cal_data', cal_data);
-        */
         cal_rect.filter(function(d) { return cal_data.has(d); })
             //.attr("class", function(d) { return "day " + color(cal_data.get(d)); })
             .attr("fill", function(d) { return cal_data.get(d).color; });
@@ -119,50 +104,7 @@ function monthPath(t0) {
         "H" + (w0 + 1) * cal_cellSize + "Z";
 }
 
-/*
-// --------------------------
-// Legend
-// --------------------------
-var svgContainer = d3.select("#calendar-legend").append("svg")
-    .attr("width", 800)
-    .attr("height", 40);
-svgContainer.append("text")
-    .attr("x", 10)
-    .attr("y", 25)
-    .text("價格低")
-    .attr("class", "calendar-legend-label")
 
-var cal_rectangle = svgContainer.append("rect")
-    .attr("x", 60)
-    .attr("y", 10)
-    .attr("width", 20)
-    .attr("height", 20).attr("fill", "#006837");
-
-svgContainer.append("rect")
-    .attr("x", 90)
-    .attr("y", 10)
-    .attr("width", 20)
-    .attr("height", 20).attr("fill", "#A6D96A");
-
-svgContainer.append("rect")
-    .attr("x", 120)
-    .attr("y", 10)
-    .attr("width", 20)
-    .attr("height", 20).attr("fill", "#FEE08B");
-svgContainer.append("rect")
-    .attr("x", 150)
-    .attr("y", 10)
-    .attr("width", 20)
-    .attr("height", 20).attr("fill", "#A50026");
-
-svgContainer.append("text")
-    .attr("x", 180)
-    .attr("y", 25)
-    .text("價格高")
-    .attr("class", "calendar-legend-label")
-
-*/
-// ---------------------------
 month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 cal_used_year = [];
 
@@ -172,8 +114,6 @@ Object.keys(month_label_pos).forEach(y => {
     }
 });
 
-// used_year.forEach(y => {
-// });
 
 for (var i = 0; i < month.length; i++) {
     let x = 6 + (6 * i);

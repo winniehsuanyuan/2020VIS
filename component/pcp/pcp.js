@@ -1,12 +1,10 @@
 /*for 309551091.html*/
 
-const pcp_width = 960;
-const pcp_height = 350;
-const margin = { top: 30, right: 50, bottom: 30, left: 0 };//left150
-const innerWidth = pcp_width - margin.left - margin.right;
-const innerHeight = pcp_height - margin.top - margin.bottom; 
-const color = ['rgba(255, 0, 0, 0.3)', 'rgba(255, 128, 0, 0.2)', 'rgba(255, 255, 0, 0.2)', 'rgba(0, 255, 0, 0.2)', 'rgba(34, 139, 34, 0.2)', 'rgba(135, 206, 235, 0.2)', 'rgba(0, 0, 255, 0.2)', 'rgba(139, 0, 255, 0.2)'];
-const price = ['<18','18-20', '21-23', '24-26', '27-29', '30-32','33-35','>35'];
+const pcp_width = 1000;
+const pcp_height = 300;
+const pcp_margin = { top: 30, right: 20, bottom: 10, left: 0 };//left150
+const innerWidth = pcp_width - pcp_margin.left - pcp_margin.right;
+const innerHeight = pcp_height - pcp_margin.top - pcp_margin.bottom; 
 const className = ['c1','c2','c3','c4','c5', 'c6','c7','c8']; //for hover
 const city = ['新北市','臺中市','臺南市','高雄市','桃園市','新竹縣','苗栗縣','南投縣','彰化縣','雲林縣','嘉義市','屏東縣','宜蘭縣','花蓮縣','臺東縣'];
 
@@ -17,8 +15,9 @@ $(document).ready(function() {
 function plot_pcp(crop, year, weather){
   // clear the previous plot
   $("#pcp-div").empty();
+  $("#img-div").empty();
 
-  //const weather = ['_氣壓','_氣溫','_風速', '_最大陣風','_降水量'];
+
   const dimensions = ['平均價']; 
   city.forEach(c=>{
     dimensions.push(c+'_'+weather);
@@ -27,7 +26,7 @@ function plot_pcp(crop, year, weather){
   .attr('width', pcp_width)
   .attr('height', pcp_height);
   const g = svg.append('g')
-       .attr('transform', `translate(${margin.left},${margin.top})`);
+       .attr('transform', `translate(${pcp_margin.left},${pcp_margin.top})`);
   //read pcp_data
   d3.csv('data/weather/'+crop+'/'+year+'/_'+weather+'.csv')
     .then(pcp_data => {
@@ -126,9 +125,32 @@ function plot_pcp(crop, year, weather){
         .attr('y', -10)
         //.attr('transform', function(d){return 'rotate(-45)'})
         .style('text-anchor', 'middle')
-        .text(d => d.replace(weather[0], ''));
+        .text(d => d.replace('_'+weather, ''));
 
+    
+///////////////////////////////////////////////////////////////////////////////////////
+    const img_margin = { top: 0, right: 0, bottom: 0, left: 30 };
+    const img = d3.select('#img-div').append('img').attr('id', 'colorImg')
+      .attr('src', 'component/pcp/color.png');
+    const img_width = parseInt(img.style('width'));
+    const img_height = parseInt(img.style('height'));
+    const canvas = d3.select('#img-div').append('canvas').attr('id', 'imgCanvas')
+      .attr('width', String(img_width)) //256px x 256px
+      .attr('height', String(img_height));
+    const c = canvas.node().getContext('2d');
+    //c.fillStyle = "rgba(200,200,200,0.9)";
+    //c.fillRect(0, 0, img_width, img_width);
+    pcp_data.forEach(function(d){
+      c.beginPath();
+      c.arc(d['y'], d['x'], 3, 0, 2 * Math.PI, false);
+      c.lineWidth = 1;
+      c.strokeStyle = 'rgba(0,0,0,0.8)';
+      c.stroke();
+      c.fillStyle='rgba(255,255,255,0.8)';
+      c.fill();
     });
+
+  });
 }
 
 
