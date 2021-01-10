@@ -1,29 +1,36 @@
-// var rawDataURL = 'data/香蕉_avg.csv';
+// var rawDataURL = 'data/crop_avg.csv';
 // var xField = 'DateTime';
 // var yField = '平均價';
 // var vField = '交易量';
 
-Plotly.d3.csv(rawDataURL, function(err, rawData) {
-    if (err) throw err;
+function plot_line(crop, start, end) {
+    let data_file = rawDataURL.replace('crop', crop);
+    Plotly.d3.csv(data_file, function(err, rawData) {
+        if (err) throw err;
 
-    var data = prepDataAll(rawData);
-    var layout = {
-        title: '香蕉 - 平均價',
-        xaxis: {},
-        yaxis: {
-            title: '交易量',
-            // overlaying: 'y',
-            side: 'right'
-        },
-        yaxis2: {
-            title: '平均價 (元)',
-            fixedrange: true,
-            overlaying: 'y'
-        },
-    };
+        var data = prepDataAll(rawData);
+        var layout = {
+            title: crop + ' - 平均價',
+            xaxis: {
+                range: [start, end]
+            },
+            yaxis: {
+                title: '交易量',
+                // overlaying: 'y',
+                side: 'right'
+            },
+            yaxis2: {
+                title: '平均價 (元)',
+                fixedrange: true,
+                overlaying: 'y'
+            },
+        };
 
-    Plotly.plot('all-year-graph', data, layout, { showSendToCloud: true });
-});
+        Plotly.plot('all-year-graph', data, layout, {
+            showSendToCloud: true
+        });
+    });
+}
 
 function prepDataAll(rawData) {
     var x = [];
@@ -64,3 +71,5 @@ function prepDataAll(rawData) {
 function update_all_year_plot(start, end) {
     Plotly.relayout('all-year-graph', 'xaxis.range', [start, end]);
 }
+
+plot_line('香蕉', '2012-01-01', '2019-12-31');
