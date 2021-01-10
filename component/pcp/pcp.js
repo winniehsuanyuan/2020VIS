@@ -48,14 +48,16 @@ function plot_pcp(crop, year, weather){
         d3.selectAll('.line')
           .transition().duration(200)
           .style('stroke', 'rgba(0,0,0,0)');
-        d3.selectAll('.' + selected_class)
+        d3.selectAll('.line.' + selected_class)
           .transition().duration(200)
           .style('stroke', d => d['color']);
+        drawNodes(selected_class);
       }
       const noHover = function(d){
         d3.selectAll('.line')
           .transition().duration(200).delay(500)
           .style('stroke', d => d['color']);
+        drawNodes(false);
       }
 
       //y: one scale linear for each dimension
@@ -88,7 +90,7 @@ function plot_pcp(crop, year, weather){
       .enter().append('path')
         .attr('class', d => 'line ' + priceClass(+d['平均價']))
         .attr('d',  lineCoor)
-        .style('stroke', d => d['color'])//lineColor(d['平均價']))
+        .style('stroke', d => d['color'])
         .on('mouseover', highlight)
         .on('mouseleave', noHover);
 
@@ -137,18 +139,52 @@ function plot_pcp(crop, year, weather){
     const canvas = d3.select('#img-div').append('canvas').attr('id', 'imgCanvas')
       .attr('width', String(img_width)) //256px x 256px
       .attr('height', String(img_height));
-    const c = canvas.node().getContext('2d');
-    //c.fillStyle = "rgba(200,200,200,0.9)";
-    //c.fillRect(0, 0, img_width, img_width);
-    pcp_data.forEach(function(d){
-      c.beginPath();
-      c.arc(d['y'], d['x'], 3, 0, 2 * Math.PI, false);
-      c.lineWidth = 1;
-      c.strokeStyle = 'rgba(0,0,0,0.8)';
-      c.stroke();
-      c.fillStyle='rgba(255,255,255,0.8)';
-      c.fill();
-    });
+    const customBase = document.createElement('custom');
+    const custom = d3.select(customBase);
+    //bind data
+    var join = custom.selectAll('custom.circle').data(pcp_data)
+      .enter().append('custom')
+      .attr('class', d => 'circle ' + priceClass(+d['平均價']))
+      .attr('x', d => d['y'])
+      .attr('y', d => d['x']);
+
+    function drawNodes(selected_class){
+      var c = canvas.node().getContext('2d');
+      c.clearRect(0, 0, img_width, img_height);
+      var elements = custom.selectAll('.circle');
+      if(selected_class){
+        elements.each(function(d){
+          var node = d3.select(this);
+          c.fillStyle='rgba(100,100,100,0.2)';
+          c.strokeStyle = 'rgba(0,0,0,0.2)';
+          c.beginPath();
+          c.arc(node.attr('x'), node.attr('y'), 3, 0, 2*Math.PI, false);
+          c.stroke();
+          c.fill();
+        });
+        var selected = custom.selectAll('.'+selected_class)
+        selected.each(function(d){
+          var node = d3.select(this);
+          c.fillStyle='rgba(255,255,255,0.8)';
+          c.strokeStyle = 'rgba(0,0,0,0.8)';
+          c.beginPath();
+          c.arc(node.attr('x'), node.attr('y'), 3, 0, 2*Math.PI, false);
+          c.stroke();
+          c.fill();
+        });
+      }else{
+        elements.each(function(d){
+          var node = d3.select(this);
+          c.fillStyle='rgba(255,255,255,0.8)';
+          c.strokeStyle = 'rgba(0,0,0,0.8)';
+          c.beginPath();
+          c.arc(node.attr('x'), node.attr('y'), 3, 0, 2*Math.PI, false);
+          c.stroke();
+          c.fill();
+        });
+      }
+    }
+    drawNodes(false);
 
   });
 }
