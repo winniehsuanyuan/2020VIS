@@ -1,70 +1,76 @@
-var rawDataURL = 'data/香蕉_avg.csv';
+var rawDataURL = 'data/crop_avg.csv';
 var xField = 'DateTime';
 var yField = '平均價';
 var vField = '交易量';
 
-Plotly.d3.csv(rawDataURL, function(err, rawData) {
-    if (err) throw err;
+function plot_annual(crop) {
+    let data_file = rawDataURL.replace('crop', crop);
+    alert(data_file);
+    Plotly.d3.csv(data_file, function(err, rawData) {
+        if (err) throw err;
 
-    let data = prepData(rawData);
-    let line_data = data[0];
-    let polar_data = data[1];
+        let data = prepData(rawData);
+        let line_data = data[0];
+        let polar_data = data[1];
 
-    var traces = [];
+        var traces = [];
 
-    polar_data.forEach((year, _) => {
-        traces.push({
-            r: year['y'],
-            theta: year['x'],
-            mode: 'lines',
-            name: year['name'],
-            type: 'scatterpolar',
+        polar_data.forEach((year, _) => {
+            traces.push({
+                r: year['y'],
+                theta: year['x'],
+                mode: 'lines',
+                name: year['name'],
+                type: 'scatterpolar',
 
+            })
         })
-    })
 
-    // for the angularaxis ticks
-    // angular_data = {
-    //     type: 'scatterpolar',
-    //     r: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    //     theta: [...Array(12).keys()],
-    //     subplot: "polar2"
-    // };
+        // for the angularaxis ticks
+        // angular_data = {
+        //     type: 'scatterpolar',
+        //     r: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        //     theta: [...Array(12).keys()],
+        //     subplot: "polar2"
+        // };
 
-    var polar_layout = {
-        title: '香蕉 各年平均價',
-        showlegend: true,
-        // orientation: -90,
-        polar: {
-            domain: {
-                x: [0, 360]
+        var polar_layout = {
+            title: crop + ' 各年平均價',
+            showlegend: true,
+            // orientation: -90,
+            polar: {
+                domain: {
+                    x: [0, 360]
+                },
+                radialaxis: {
+                    tickangle: 270,
+                    angle: 270
+                },
+                angularaxis: {
+                    tickmode: 'array',
+                    tickvals: [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330],
+                    ticktext: ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.'],
+                    direction: "clockwise"
+                },
+            }
+        };
+
+        var line_layout = {
+            title: crop + ' - 各年平均價',
+            xaxis: {
+                tickformat: '%m/%d'
             },
-            radialaxis: {
-                tickangle: 270,
-                angle: 270
-            },
-            angularaxis: {
-                tickmode: 'array',
-                tickvals: [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330],
-                ticktext: ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.'],
-                direction: "clockwise"
-            },
-        }
-    };
+            yaxis: {
+                title: '平均價 (元)',
+            }
+        };
 
-    var line_layout = {
-        title: '香蕉 - 各年平均價',
-        xaxis: {
-            tickformat: '%m/%d'
-        },
-        yaxis: {
-            title: '平均價 (元)',
-        }
-    };
-
-    Plotly.newPlot('annual-polar', traces, polar_layout);
-    Plotly.newPlot('annual-line', line_data, line_layout, { showSendToCloud: true });
-});
+        Plotly.newPlot('annual-polar', traces, polar_layout);
+        Plotly.newPlot('annual-line', line_data, line_layout, {
+            showSendToCloud: true
+        });
+    });
+}
 
 function prepData(rawData) {
     let polar_year_data = {};
@@ -113,3 +119,5 @@ function prepData(rawData) {
 
     return [Object.values(line_year_data), Object.values(radius_year_data)];
 }
+
+plot_annual('大蒜-蒜仁');
