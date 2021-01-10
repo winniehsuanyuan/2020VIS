@@ -5,7 +5,6 @@ var vField = '交易量';
 
 function plot_annual(crop) {
     let data_file = rawDataURL.replace('crop', crop);
-    alert(data_file);
     Plotly.d3.csv(data_file, function(err, rawData) {
         if (err) throw err;
 
@@ -120,4 +119,4 @@ function prepData(rawData) {
     return [Object.values(line_year_data), Object.values(radius_year_data)];
 }
 
-plot_annual('大蒜-蒜仁');
+plot_annual('香蕉');
