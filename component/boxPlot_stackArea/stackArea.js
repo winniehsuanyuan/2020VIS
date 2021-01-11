@@ -8,7 +8,7 @@ const colors = ['rgb(255, 0, 0)', 'rgb(255, 128, 0)', 'rgb(255, 255, 0)', 'rgb(2
 var start_time = new Date(2012, 0, 1);
 var end_time = new Date(2019, 11, 31);
 
-function plot_stack(start, end) {
+function plot_stack(crop, start, end) {
     // clear the previous plot
     $("#stackArea").empty();
 
@@ -16,7 +16,7 @@ function plot_stack(start, end) {
         .attr('transform', `translate(${margin.left},${margin.top})`);
 
     // Parse the Data
-    d3.csv('data/stackArea/dropped_norm/青蔥-日蔥.csv').then(data => {
+    d3.csv('data/stackArea/dropped_norm/' + crop + '.csv').then(data => {
         //get col names without datetime
         var markets = data.columns.slice(1);
         data.forEach(d => {
@@ -83,5 +83,3 @@ function plot_stack(start, end) {
         });
     });
 }
-
-plot_stack(start_time, end_time);
