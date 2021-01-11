@@ -17,14 +17,13 @@ function plot_pcp(crop, year, weather){
   $("#pcp-div").empty();
   $("#img-div").empty();
 
-
-  const dimensions = ['平均價']; 
+  var dimensions = ['平均價']; 
   city.forEach(c=>{
     dimensions.push(c+'_'+weather);
   });
   const svg = d3.select('#pcp-div').append('svg')
-  .attr('width', pcp_width)
-  .attr('height', pcp_height);
+    .attr('width', pcp_width)
+    .attr('height', pcp_height);
   const g = svg.append('g')
        .attr('transform', `translate(${pcp_margin.left},${pcp_margin.top})`);
   //read pcp_data
@@ -42,24 +41,44 @@ function plot_pcp(crop, year, weather){
         else if (d<=(min_max[0]+7*k)) return className[6];
         else return className[7];
       };
-
+      var cal = d3.nest()
+        .key(function(d) { return d['DateTime']; })
+        .rollup(function(d) { 
+          return {'color': d[0]['color']};
+        })
+        .map(pcp_data);
       const highlight = function(d){
-        let selected_class = priceClass(+d['平均價']);
+        var selected_class = priceClass(+d['平均價']);
+        //pcp
         d3.selectAll('.line')
           .transition().duration(200)
           .style('stroke', 'rgba(0,0,0,0)');
         d3.selectAll('.line.' + selected_class)
           .transition().duration(200)
           .style('stroke', d => d['color']);
+        //image nodes
         drawNodes(selected_class);
+        //calendar
+        d3.selectAll('.year')
+          .attr('fill','#fff');
+        d3.selectAll('.year.'+ selected_class)
+          .attr('fill', function(d){
+            if(cal.has(d)) return cal.get(d).color;
+            else return '#fff';});   
       }
       const noHover = function(d){
+        //pcp
         d3.selectAll('.line')
           .transition().duration(200).delay(500)
           .style('stroke', d => d['color']);
+        //image nodes
         drawNodes(false);
+        //calendar
+        d3.selectAll('.year')
+          .attr('fill', function(d){
+            if(cal.has(d)) return cal.get(d).color;
+            else return '#fff';});  
       }
-
       //y: one scale linear for each dimension
       var yAxis = {}
       for (let i in dimensions) {
@@ -71,7 +90,7 @@ function plot_pcp(crop, year, weather){
       }
 
       //x: scale point find the best x coor for each Y axis
-      var xAxis = d3.scalePoint()
+      const xAxis = d3.scalePoint()
               .domain(dimensions)
               .range([0, innerWidth])
               .padding(0.5)            //left/right padding
@@ -85,8 +104,8 @@ function plot_pcp(crop, year, weather){
       }
 
       //draw lines
-      var lineCoor = d => d3.line()(dimensions.map( p => [ xCoor(p), yAxis[p](d[p]) ] ));  //take a row of the csv as input, and return [x, y]
-      var lines = g.selectAll('path').data(pcp_data)
+      const lineCoor = d => d3.line()(dimensions.map( p => [ xCoor(p), yAxis[p](d[p]) ] ));  //take a row of the csv as input, and return [x, y]
+      const lines = g.selectAll('path').data(pcp_data)
       .enter().append('path')
         .attr('class', d => 'line ' + priceClass(+d['平均價']))
         .attr('d',  lineCoor)
@@ -95,7 +114,7 @@ function plot_pcp(crop, year, weather){
         .on('mouseleave', noHover);
 
       //draw axes
-      var AxisG = g.selectAll('axis').data(dimensions)
+      const AxisG = g.selectAll('axis').data(dimensions)
       .enter().append('g')                                    //add a group for each dimension
       .attr('class', 'axis')
       .attr('transform', d => `translate(${xAxis(d)},0)`)     //translate the axes to the right x coor
@@ -142,7 +161,7 @@ function plot_pcp(crop, year, weather){
     const customBase = document.createElement('custom');
     const custom = d3.select(customBase);
     //bind data
-    var join = custom.selectAll('custom.circle').data(pcp_data)
+    const join = custom.selectAll('custom.circle').data(pcp_data)
       .enter().append('custom')
       .attr('class', d => 'circle ' + priceClass(+d['平均價']))
       .attr('x', d => d['y'])
@@ -151,10 +170,11 @@ function plot_pcp(crop, year, weather){
     function drawNodes(selected_class){
       var c = canvas.node().getContext('2d');
       c.clearRect(0, 0, img_width, img_height);
-      var elements = custom.selectAll('.circle');
+      let elements = custom.selectAll('.circle');
       if(selected_class){
+        //turn all nodes gray
         elements.each(function(d){
-          var node = d3.select(this);
+          let node = d3.select(this);
           c.fillStyle='rgba(100,100,100,0.2)';
           c.strokeStyle = 'rgba(0,0,0,0.2)';
           c.beginPath();
@@ -162,9 +182,10 @@ function plot_pcp(crop, year, weather){
           c.stroke();
           c.fill();
         });
-        var selected = custom.selectAll('.'+selected_class)
+        //turn selected class white
+        let selected = custom.selectAll('.'+selected_class)
         selected.each(function(d){
-          var node = d3.select(this);
+          let node = d3.select(this);
           c.fillStyle='rgba(255,255,255,0.8)';
           c.strokeStyle = 'rgba(0,0,0,0.8)';
           c.beginPath();
@@ -173,8 +194,9 @@ function plot_pcp(crop, year, weather){
           c.fill();
         });
       }else{
+        //all nodes are white
         elements.each(function(d){
-          var node = d3.select(this);
+          let node = d3.select(this);
           c.fillStyle='rgba(255,255,255,0.8)';
           c.strokeStyle = 'rgba(0,0,0,0.8)';
           c.beginPath();
