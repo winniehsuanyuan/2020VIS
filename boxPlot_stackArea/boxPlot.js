@@ -174,5 +174,3 @@ function plot_box(crop, start, end) {
         }
     });
 }
-
-plot_box('香蕉', box_start_time, box_end_time);

@@ -71,5 +71,3 @@ function prepDataAll(rawData) {
 function update_all_year_plot(start, end) {
     Plotly.relayout('all-year-graph', 'xaxis.range', [start, end]);
 }
-
-plot_line('香蕉', '2012-01-01', '2019-12-31');

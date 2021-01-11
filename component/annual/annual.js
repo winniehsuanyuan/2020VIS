@@ -118,5 +118,3 @@ function prepData(rawData) {
 
     return [Object.values(line_year_data), Object.values(radius_year_data)];
 }
-
-plot_annual('香蕉');

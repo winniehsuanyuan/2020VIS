@@ -83,5 +83,3 @@ function plot_stack(crop, start, end) {
         });
     });
 }
-
-plot_stack('香蕉', start_time, end_time);

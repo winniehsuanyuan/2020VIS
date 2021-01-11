@@ -1,4 +1,13 @@
 $(document).ready(function() {
+    // intital plot
+    let init_crop = $('#crop').val();
+    let init_start = $('#time-slider').dateRangeSlider("min");
+    let init_end = $('#time-slider').dateRangeSlider("max");
+    plot_annual(init_crop);
+    plot_line(init_crop, init_start, init_end);
+    plot_box(init_crop, init_start, init_end);
+    plot_stack(init_crop, init_start, init_end);
+
     // date slider listener
     $("#time-slider").bind("valuesChanged", function(e, data) {
         let start = data.values.min;
