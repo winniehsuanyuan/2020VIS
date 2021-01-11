@@ -1,7 +1,7 @@
 let box_start_time = new Date(2012, 0, 1);
 let box_end_time = new Date(2019, 11, 31);
 
-function plot_box(start, end) {
+function plot_box(crop, start, end) {
     // clear the previous plot
     $("#boxPlot").empty();
 
@@ -19,7 +19,7 @@ function plot_box(start, end) {
     //const markets = ['三重區', '台中市', '台北一', '台北二', '台東市', '嘉義市', '宜蘭市', '東勢鎮', '板橋區', '桃農', '豐原區', '高雄市', '鳳山區', '西螺鎮', '屏東市', '溪湖鎮', '南投市', '花蓮市'];
 
     // Read the data and compute summary statistics for each specie
-    d3.csv('data/boxPlot/青蔥-日蔥.csv').then(data => {
+    d3.csv('data/boxPlot/' + crop + '.csv').then(data => {
         //console.log(data);
         data.forEach(d => {
             d.DateTime = d3.timeParse("%Y-%m-%d")(d.DateTime);
@@ -175,4 +175,4 @@ function plot_box(start, end) {
     });
 }
 
-plot_box(box_start_time, box_end_time);
+plot_box('香蕉', box_start_time, box_end_time);
