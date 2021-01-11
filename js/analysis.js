@@ -7,6 +7,11 @@ $(document).ready(function() {
     plot_line(init_crop, init_start, init_end);
     plot_box(init_crop, init_start, init_end);
     plot_stack(init_crop, init_start, init_end);
+    // load iframe
+    let init_start_str = init_start.toISOString().substring(0, 10);
+    let init_end_str = init_end.toISOString().substring(0, 10);
+    let iframe = document.getElementById("map-iframe");
+    iframe.src = `component/map/index.html?crop=${init_crop}&start=${init_start_str}&end=${init_end_str}`;
 
     // date slider listener
     $("#time-slider").bind("valuesChanged", function(e, data) {
@@ -17,6 +22,11 @@ $(document).ready(function() {
         plot_typhoon(start, end);
         plot_stack(crop, start, end);
         plot_box(crop, start, end);
+
+        // update map
+        let start_str = start.toISOString().substring(0, 10);
+        let end_str = end.toISOString().substring(0, 10);
+        iframe.src = `component/map/index.html?crop=${crop}&start=${start_str}&end=${end_str}`;
     });
 
     // crop drop-down list listener
@@ -28,5 +38,10 @@ $(document).ready(function() {
         plot_annual(crop);
         plot_box(crop, start, end);
         plot_stack(crop, start, end);
+
+        // update map
+        let start_str = start.toISOString().substring(0, 10);
+        let end_str = end.toISOString().substring(0, 10);
+        iframe.src = `component/map/index.html?crop=${crop}&start=${start_str}&end=${end_str}`;
     });
 });
