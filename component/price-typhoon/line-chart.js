@@ -26,7 +26,7 @@ function plot_line(crop, start, end) {
             },
         };
 
-        Plotly.plot('all-year-graph', data, layout, {
+        Plotly.newPlot('all-year-graph', data, layout, {
             showSendToCloud: true
         });
     });
