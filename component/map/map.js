@@ -2,11 +2,33 @@ let select_date = '2012-01-08';
 const CITY = ["臺北市", "嘉義市", "新竹市", "基隆市", "新北市", "桃園市", "臺中市", "彰化縣", "高雄市", "臺南市", "金門縣", "澎湖縣", "雲林縣", "連江縣", "新竹縣", "苗栗縣", "屏東縣", "嘉義縣", "宜蘭縣", "南投縣", "花蓮縣", "臺東縣"];
 const DATA_FILE = "data/週成交量_小白菜-土白菜_市場.csv";
 
+// reference: https://www.learningjquery.com/2012/06/get-url-parameters-using-jquery
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+};
+
+
 $(document).ready(function() {
 
     let market_data = new Object();
     var density = {};
     var value_max, value_min;
+
+    // get query string
+    let crop = getUrlParameter('crop');
+    let start = getUrlParameter('start');
+    let end = getUrlParameter('end');
 
     d3.csv(DATA_FILE, function(error, csv) {
         if (error) throw error;
