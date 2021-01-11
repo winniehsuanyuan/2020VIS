@@ -1,4 +1,4 @@
-var rawDataURL = 'data/crop_avg.csv';
+var rawDataURL = 'data/price/crop_avg.csv';
 var xField = 'DateTime';
 var yField = '平均價';
 var vField = '交易量';
