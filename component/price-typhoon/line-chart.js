@@ -10,7 +10,6 @@ function plot_line(crop, start, end) {
 
         var data = prepDataAll(rawData);
         var layout = {
-            title: crop + ' - 平均價',
             xaxis: {
                 range: [start, end]
             },

@@ -34,8 +34,11 @@ function plot_annual(crop) {
         // };
 
         var polar_layout = {
-            title: crop + ' 各年平均價',
             showlegend: true,
+            legend: {
+                x: 20,
+                // y: 0
+            },
             // orientation: -90,
             polar: {
                 domain: {
@@ -51,16 +54,22 @@ function plot_annual(crop) {
                     ticktext: ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.'],
                     direction: "clockwise"
                 },
+            },
+            margin: {
+                l: 5
             }
         };
 
         var line_layout = {
-            title: crop + ' - 各年平均價',
             xaxis: {
                 tickformat: '%m/%d'
             },
             yaxis: {
                 title: '平均價 (元)',
+            },
+            showlegend: false,
+            margin: {
+                r: 10
             }
         };
 
