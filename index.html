@@ -25,7 +25,6 @@
     <link rel="stylesheet" href="component/boxPlot_stackArea/index.css">
     <link rel="stylesheet" href="component/calendar/calendar.css">
     <link rel="stylesheet" href="component/pcp/pcp.css">
-    <link rel="stylesheet" href="css/interface.css">
 
 </head>
 
@@ -43,7 +42,7 @@
                             <a class="nav-item nav-link active" id="nav-analysis-tab" data-toggle="tab" href="#nav-analysis" role="tab" aria-controls="nav-analysis" aria-selected="true">Analysis</a>
                             <a class="nav-item nav-link" id="nav-weather-tab" data-toggle="tab" href="#nav-weather" role="tab" aria-controls="nav-weather" aria-selected="false">Weather</a>
                             <li>
-                                <select name="selectCropYear" id="crop" class="form-select">
+                        <select id="crop" class="form-select">
                             <option>大蒜-蒜仁</option>
                             <option>小白菜-土白菜</option>
                             <option>木瓜-網室紅肉</option>
@@ -86,25 +85,34 @@
 
                 <h1>歷年價格與颱風</h1>
                 <div class="row" id="all-year-graph"></div>
-                <div class="row" id="typhoon-timeline"></div>
                 <h4>颱風資訊</h4>
+                <div class="row" id="typhoon-timeline"></div>
                 <script src="component/price-typhoon/timeline.js"></script>
                 <script src="component/price-typhoon/line-chart.js"></script>
 
                 <h1>市場分析</h1>
                 <div class="row">
                     <div class="col-8" id="">
-                        <h3>市場價格分佈</h3>
+                        <h4>市場價格分佈</h4>
                         <svg id="boxPlot" width="800" height="500"></svg>
                         <script src="component/boxPlot_stackArea/boxPlot.js"></script>
                     </div>
                     <div class="col-4" id="">
-                        <h3>成交量地圖</h3>
+                        <h4>成交量地圖</h4>
+                        <!-- Rounded switch -->
                         <iframe id="map-iframe" width="600px" height="600px"></iframe>
                     </div>
                 </div>
-
-                <h1>每週成交量統計</h1>
+                
+                <div class="row">
+                    <div class="col-2"><h4>每週成交量統計</h4></div>
+                    <div class="col-2 switch-container"> 百分比
+                        <label class="switch">
+                          <input type="checkbox" checked id="normalize">
+                          <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
                 <div class="row">
                     <svg id="stackArea" width="1200" height="500"></svg>
                     <script src="component/boxPlot_stackArea/stackArea.js"></script>
@@ -117,7 +125,7 @@
             <!-- weather page -->
             <div class="tab-pane fade" id="nav-weather" role="tabpanel" aria-labelledby="nav-weather-tab">
                 <!-- selector -->
-                <select name="selectCropYear" id="year"> 
+                <select id="year"> 
                     <option>2012</option>
                     <option>2013</option>
                     <option>2014</option>
@@ -127,7 +135,7 @@
                     <option>2018</option>
                     <option>2019</option>
                 </select>
-                <select name="selectWeather" id="weather"> 
+                <select id="weather"> 
                     <option>氣溫</option>
                     <option selected>氣壓</option>
                     <option>降水量</option>
