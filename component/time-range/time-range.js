@@ -7,7 +7,9 @@ $(document).ready(function() {
         defaultValues: {
             min: new Date(2012, 0, 1),
             max: new Date(2019, 11, 31)
-        }
+        },
+        valueLabels: "change",
+        delayOut: 800
     });
 
     /* === time-slider update event ===

@@ -31,31 +31,47 @@
 
 <body>
     <div class="container">
-        <h1>作物選擇</h1>
-        <div class="row">
-            <select name="selectCropYear" id="crop">
-                    <option>大蒜-蒜仁</option>
-                    <option>小白菜-土白菜</option>
-                    <option>木瓜-網室紅肉</option>
-                    <option>芽菜類-黃豆牙</option>
-                    <option>青蔥-日蔥</option>
-                    <option>南瓜-木瓜形</option>
-                    <option>洋香瓜-網狀紅肉</option>
-                    <option selected>香蕉</option>
-                    <option>鳳梨-金鑽鳳梨</option>
-                    <option>蓮霧-紅蓮霧</option>
-            </select>
-        </div>
+        <br>
         <br>
 
-        <!-- tab nav bar -->
-        <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav-analysis-tab" data-toggle="tab" href="#nav-analysis" role="tab" aria-controls="nav-analysis" aria-selected="true">Analysis</a>
-                <a class="nav-item nav-link" id="nav-weather-tab" data-toggle="tab" href="#nav-weather" role="tab" aria-controls="nav-weather" aria-selected="false">Weather</a>
-            </div>
-        </nav>
         <div class="tab-content" id="nav-tabContent">
+            <div class="row fixed-top" id="toolbar">
+                <div class="col-4 nav-tab-crop">
+                    <!-- tab nav bar -->
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-analysis-tab" data-toggle="tab" href="#nav-analysis" role="tab" aria-controls="nav-analysis" aria-selected="true">Analysis</a>
+                            <a class="nav-item nav-link" id="nav-weather-tab" data-toggle="tab" href="#nav-weather" role="tab" aria-controls="nav-weather" aria-selected="false">Weather</a>
+                            <li>
+                                <select name="selectCropYear" id="crop" class="form-select">
+                            <option>大蒜-蒜仁</option>
+                            <option>小白菜-土白菜</option>
+                            <option>木瓜-網室紅肉</option>
+                            <option>芽菜類-黃豆牙</option>
+                            <option>青蔥-日蔥</option>
+                            <option>南瓜-木瓜形</option>
+                            <option>洋香瓜-網狀紅肉</option>
+                            <option selected>香蕉</option>
+                            <option>鳳梨-金鑽鳳梨</option>
+                            <option>蓮霧-紅蓮霧</option>
+                        </select>
+                            </li>
+                        </div>
+                    </nav>
+                </div>
+                <div class="col-8 time-nav">
+                    <div class="row">
+                        <div class="col-1 justify-content-center align-self-center">
+                            時間區間：
+                        </div>
+                        <div class="col-11">
+                            <div id="time-slider"></div>
+                            <script src="component/time-range/time-range.js"></script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- analysis page -->
             <div class="tab-pane fade show active" id="nav-analysis" role="tabpanel" aria-labelledby="nav-analysis-tab">
                 <h1>各年度價格分析</h1>
@@ -68,16 +84,10 @@
 
                 <h1>全年度價格與颱風</h1>
                 <div class="row" id="all-year-graph"></div>
-                <h4>颱風資訊</h4>
                 <div class="row" id="typhoon-timeline"></div>
+                <h4>颱風資訊</h4>
                 <script src="component/price-typhoon/timeline.js"></script>
                 <script src="component/price-typhoon/line-chart.js"></script>
-
-                <h3>時間選擇</h3>
-                <div class="row">
-                    <div id="time-slider"></div>
-                </div>
-                <script src="component/time-range/time-range.js"></script>
 
                 <h1>市場分析</h1>
                 <div class="row">
