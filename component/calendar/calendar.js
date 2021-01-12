@@ -1,10 +1,11 @@
 $(document).ready(function() {
     plot_calendar('香蕉', '2017');
 });
-function plot_calendar(crop, year){
+
+function plot_calendar(crop, year) {
     $("#calendar-div").empty();
-    CALENDAR_START_YEAR = parseInt(year)-1,
-    CALENDAR_END_YEAR = parseInt(year);
+    CALENDAR_START_YEAR = parseInt(year),
+        CALENDAR_END_YEAR = parseInt(year);
     var cal_width = 960,
         cal_height = 136,
         cal_cellSize = 17; // cell size
@@ -20,14 +21,14 @@ function plot_calendar(crop, year){
     var prev_pos = 0,
         cur_pos = 0;
 
-    var cal_svg = d3.select("#calendar-div")
+    var cal_svg = d3.select("#calendar-div").selectAll('div')
         .data(d3.range(CALENDAR_START_YEAR, CALENDAR_END_YEAR + 1))
         .enter().append("svg")
         .attr("width", cal_width)
         .attr("height", cal_height)
         .attr("class", "RdYlGn")
         .append("g")
-        .attr("transform", "translate(" + ((cal_width - cal_cellSize * 53+50) / 2) + "," + (cal_height - cal_cellSize * 7 - 1) + ")");
+        .attr("transform", "translate(" + ((cal_width - cal_cellSize * 53 + 50) / 2) + "," + (cal_height - cal_cellSize * 7 - 1) + ")");
 
     cal_svg.append("text")
         .attr("transform", "translate(-6," + cal_cellSize * 3.5 + ")rotate(-90)")
@@ -56,42 +57,43 @@ function plot_calendar(crop, year){
         .attr("class", genMonthClass)
         .attr("d", monthPath);
 
-    d3.csv('data/weather/'+crop+'/'+year+'/_氣壓.csv')//////change read data
+    d3.csv('data/weather/' + crop + '/' + year + '/_氣壓.csv') //////change read data
         .then(csv => {
             let value_max = 0,
                 value_min = 10000;
 
             var cal_data = d3.nest()
                 .key(function(d) { return d['DateTime']; })
-                
-                .rollup(function(d) {
-                    return {'color': d[0]['color'], 'price': +d[0]['平均價']};
+
+            .rollup(function(d) {
+                    return { 'color': d[0]['color'], 'price': +d[0]['平均價'] };
                 })
                 .map(csv);
             //for hover
-            const className = ['c1','c2','c3','c4','c5', 'c6','c7','c8']; //for hover
+            const className = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8']; //for hover
             const min_max = d3.extent(csv, d => +d['平均價']);
-            const k = Math.floor((min_max[1] - min_max[0])/8);
+            const k = Math.floor((min_max[1] - min_max[0]) / 8);
             const priceClass = (d) => {
-            if (d<(min_max[0]+k)) return className[0];
-                else if (d<=(min_max[0]+2*k)) return className[1];
-                else if (d<=(min_max[0]+3*k)) return className[2];
-                else if (d<=(min_max[0]+4*k)) return className[3];
-                else if (d<=(min_max[0]+5*k)) return className[4];
-                else if (d<=(min_max[0]+6*k)) return className[5];
-                else if (d<=(min_max[0]+7*k)) return className[6];
+                if (d < (min_max[0] + k)) return className[0];
+                else if (d <= (min_max[0] + 2 * k)) return className[1];
+                else if (d <= (min_max[0] + 3 * k)) return className[2];
+                else if (d <= (min_max[0] + 4 * k)) return className[3];
+                else if (d <= (min_max[0] + 5 * k)) return className[4];
+                else if (d <= (min_max[0] + 6 * k)) return className[5];
+                else if (d <= (min_max[0] + 7 * k)) return className[6];
                 else return className[7];
             };
             cal_rect.filter(d => cal_data.has(d))
-                .attr("class", d => "day year "+ priceClass(cal_data.get(d).price))//for hover
+                .attr("class", d => "day year " + priceClass(cal_data.get(d).price)) //for hover
                 .attr("fill", d => cal_data.get(d).color);
-                //.select("title");
-                //.text(function(d) { return d + " : " + String(Math.round(cal_data.get(d))) + " 元"; });
+            //.select("title");
+            //.text(function(d) { return d + " : " + String(Math.round(cal_data.get(d))) + " 元"; });
         })
         .catch(error => {
             console.log(error);
 
         })
+
     function genMonthClass(t0) {
         return "month month-" + String(t0.getFullYear());
     }
