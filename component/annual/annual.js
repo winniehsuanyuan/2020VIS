@@ -34,7 +34,6 @@ function plot_annual(crop) {
         // };
 
         var polar_layout = {
-            title: crop + ' 各年平均價',
             showlegend: true,
             // orientation: -90,
             polar: {
@@ -55,7 +54,6 @@ function plot_annual(crop) {
         };
 
         var line_layout = {
-            title: crop + ' - 各年平均價',
             xaxis: {
                 tickformat: '%m/%d'
             },
