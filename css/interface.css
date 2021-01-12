@@ -34,3 +34,8 @@ html body#dummybodyid div.container div#nav-tabContent.tab-content div#nav-analy
 h4 {
     margin-top: 1vh;
 }
+
+#nav-range-label {
+    padding-right: 5px;
+    padding-top: 8px;
+}
