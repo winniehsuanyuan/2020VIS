@@ -1,0 +1,23 @@
+{
+  "name": "VIS_final_project",
+  "version": "1.0.0",
+  "description": "* 各圖表 draft & 進度：https://hackmd.io/BfxLBt1MT8Kp5vKFpwDN0Q * 整合討論：https://hackmd.io/9yVy3HuJTNSjFhkttq0c9Q",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/winniehsuanyuan/VIS_final_project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/winniehsuanyuan/VIS_final_project/issues"
+  },
+  "homepage": "https://github.com/winniehsuanyuan/VIS_final_project#readme",
+  "dependencies": {
+    "d3-gtimeline": "0.0.5"
+  }
+}

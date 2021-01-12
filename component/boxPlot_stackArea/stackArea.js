@@ -4,7 +4,7 @@ const height = +svg.attr('height');
 const margin = { top: 10, right: 80, bottom: 30, left: 80 }; //left150
 const innerWidth = width - margin.left - margin.right;
 const innerHeight = height - margin.top - margin.bottom;
-const colors = ['rgb(255, 0, 0)', 'rgb(255, 128, 0)', 'rgb(255, 255, 0)', 'rgb(204, 255, 0)', 'rgb(0, 255, 0)', 'rgb(34, 139, 34)', 'rgb(135, 206, 235)', 'rgb(0, 0, 255)', 'rgb(0, 0, 128)', 'rgb(139, 0, 255)', 'rgb(184,161,207)', 'rgb(230, 138, 184)', 'rgb(255, 192, 203)'];
+const colors = ['rgba(228,27,19,1)', 'rgba(241,134,14,1)', 'rgba(253,200,0,1)', 'rgba(152,198,70,1)', 'rgba(27,165,72,1)', 'rgba(0,156,166,1)', 'rgba(0,163,226,1)', 'rgba(0,87,184,1)', 'rgba(104,91,199,1)', 'rgba(180,0,158,1)', 'rgb(184,161,207)', 'rgb(230, 138, 184)', 'rgb(255, 192, 203)'];
 var start_time = new Date(2012, 0, 1);
 var end_time = new Date(2019, 11, 31);
 
@@ -17,8 +17,6 @@ function plot_stack(crop, start, end) {
 
     // Parse the Data
     d3.csv('data/stackArea/dropped_norm/' + crop + '.csv').then(data => {
-        //get col names without datetime
-        var markets = data.columns.slice(1);
         data.forEach(d => {
             d.DateTime = d3.timeParse("%Y-%m-%d")(d.DateTime);
         });
@@ -29,7 +27,13 @@ function plot_stack(crop, start, end) {
             else
                 return false;
         })
-
+        //get col names without datetime
+        var markets = d3.keys(data[0]).filter(function(d){ 
+            if (d=='DateTime') return false;
+            let min_max = d3.extent(data, r => r[d]);
+            if(min_max[0]==min_max[1]) return false;
+            else return true;
+        });
         //stack the data
         var stackedData = d3.stack()
             .keys(markets)(data);
@@ -61,8 +65,8 @@ function plot_stack(crop, start, end) {
             .enter()
             .append('path')
             .style('fill', d => color(d.key))
-            .attr("stroke", "rgb(0,0,0)")
-            .attr("stroke-width", 0.05)
+            .attr('stroke', 'rgb(0,0,0)')
+            .attr('stroke-width', 0.05)
             .attr('d', d3.area()
                 .x(function(d, i) { return x(d.data.DateTime); })
                 .y0(function(d) { return y(d[0]); })

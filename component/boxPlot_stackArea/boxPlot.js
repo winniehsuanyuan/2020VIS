@@ -11,13 +11,13 @@ function plot_box(crop, start, end) {
     let margin = { top: 10, right: 10, bottom: 30, left: 50 }; //left150
     let innerWidth = width - margin.left - margin.right;
     let innerHeight = height - margin.top - margin.bottom;
-    let color = ['rgba(0, 0, 0, 0.65)', 'rgba(153, 76, 0, 1)', 'rgba(255,153,51,1)'];
+    let colors = ['rgba(228,27,19,1)', 'rgba(241,134,14,1)', 'rgba(253,200,0,1)', 'rgba(152,198,70,1)', 'rgba(27,165,72,1)', 'rgba(0,156,166,1)', 'rgba(0,163,226,1)', 'rgba(0,87,184,1)', 'rgba(104,91,199,1)', 'rgba(180,0,158,1)', 'rgb(184,161,207)', 'rgb(230, 138, 184)', 'rgb(255, 192, 203)'];
+;
 
     let g = svg.append('g')
         .attr('transform', `translate(${margin.left},${margin.top})`);
 
-    //const markets = ['三重區', '台中市', '台北一', '台北二', '台東市', '嘉義市', '宜蘭市', '東勢鎮', '板橋區', '桃農', '豐原區', '高雄市', '鳳山區', '西螺鎮', '屏東市', '溪湖鎮', '南投市', '花蓮市'];
-
+    
     // Read the data and compute summary statistics for each specie
     d3.csv('data/boxPlot/' + crop + '.csv').then(data => {
         //console.log(data);
@@ -53,7 +53,6 @@ function plot_box(crop, start, end) {
                 return ({ q1: q1, median: median, q3: q3, min: min, max: max }); //, outliers: outliers});
             }).entries(data);
 
-        //console.log(outliers); 
         // Show the X scale
         var x = d3.scaleBand()
             .domain(markets)
@@ -71,12 +70,12 @@ function plot_box(crop, start, end) {
             .nice();
         g.append('g')
             .call(d3.axisLeft(y));
-        /*
-            // color palette
-            var color = d3.scaleOrdinal()
-              .domain(markets)
-              .range(colors);
-        */
+        
+        // color palette
+        var color = d3.scaleOrdinal()
+          .domain(markets)
+          .range(colors);
+        
         var tip = d3.tip().attr('class', 'd3-tip').direction('e').offset([0, 5])
             .html(function(d) {
                 var content = "<span style='margin-left: 2.5px;'><b>" + d.key + "</b></span><br>";
@@ -90,7 +89,9 @@ function plot_box(crop, start, end) {
                 return content;
             });
         svg.call(tip);
-
+        
+        let line_color = 'rgba(120,120,120, 1)';
+        let line_width = 0.8;
         // Show the main vertical line
         g.selectAll('.vertLines')
             .data(sumstat)
@@ -101,8 +102,8 @@ function plot_box(crop, start, end) {
             .attr('x2', d => x(d.key))
             .attr('y1', d => y(d.value.min))
             .attr('y2', d => y(d.value.max))
-            .attr('stroke', color[1])
-            .attr('stroke-width', 1)
+            .attr('stroke', line_color)
+            .attr('stroke-width', line_width)
             .style('stroke-dasharray', ('5,5'));
 
         // rectangle for the main box
@@ -115,9 +116,9 @@ function plot_box(crop, start, end) {
             .attr('y', d => y(d.value.q3))
             .attr('height', d => (y(d.value.q1) - y(d.value.q3)))
             .attr('width', boxWidth)
-            .attr('stroke', color[1])
-            .attr('stroke-width', 1)
-            .style('fill', color[2])
+            .attr('stroke', line_color)
+            .attr('stroke-width', line_width)
+            .attr('fill', d => color(d.key))
             .on('mouseover', tip.show)
             .on('mouseout', tip.hide);
 
@@ -131,8 +132,8 @@ function plot_box(crop, start, end) {
             .attr('x2', function(d) { return (x(d.key) + boxWidth / 2); })
             .attr('y1', d => y(d.value.median))
             .attr('y2', d => y(d.value.median))
-            .attr('stroke-width', 1)
-            .attr('stroke', color[1]);
+            .attr('stroke-width', line_width)
+            .attr('stroke', line_color);
 
         // Show the min
         g.selectAll('.minLines')
@@ -144,8 +145,8 @@ function plot_box(crop, start, end) {
             .attr('x2', function(d) { return (x(d.key) + boxWidth / 2); })
             .attr('y1', d => y(d.value.min))
             .attr('y2', d => y(d.value.min))
-            .attr('stroke-width', 1)
-            .attr('stroke', color[1]);
+            .attr('stroke-width', line_width)
+            .attr('stroke', line_color);
         //.on('mouseover', Hover);
 
         // Show the max
@@ -158,8 +159,8 @@ function plot_box(crop, start, end) {
             .attr('x2', function(d) { return (x(d.key) + boxWidth / 2); })
             .attr('y1', d => y(d.value.max))
             .attr('y2', d => y(d.value.max))
-            .attr('stroke-width', 1)
-            .attr('stroke', color[1]);
+            .attr('stroke-width', line_width)
+            .attr('stroke', line_color);
 
         // draw outliers
         if (outliers.length > 0) {
@@ -170,7 +171,10 @@ function plot_box(crop, start, end) {
                 .attr('class', 'circle')
                 .attr('r', 3)
                 .attr('cx', d => x(d['市場名稱']))
-                .attr('cy', d => y(+d['平均價']));
+                .attr('cy', d => y(+d['平均價']))
+                .attr('fill', d => color(d['市場名稱']).replace('1)', '0.5)'))
+                .attr('stroke-width', line_width)
+                .attr('stroke', line_color.replace('1)', '0.5)'));
         }
     });
 }
