@@ -1,6 +1,8 @@
-text{
-  font-size: 12px;
+text {
   font-family: sans-serif;
+  fill: black;
+  opacity: 0.85;
+  font-size: 12px;
 }
 
 .d3-tip{
