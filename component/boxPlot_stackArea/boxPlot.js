@@ -8,7 +8,7 @@ function plot_box(crop, start, end) {
     let svg = d3.select('#boxPlot');
     let width = +svg.attr('width');
     let height = +svg.attr('height');
-    let margin = { top: 10, right: 10, bottom: 30, left: 50 }; //left150
+    let margin = { top: 10, right: 10, bottom: 20, left: 50 }; //left150
     let innerWidth = width - margin.left - margin.right;
     let innerHeight = height - margin.top - margin.bottom;
     let colors = ['rgba(228,27,19,1)', 'rgba(241,134,14,1)', 'rgba(253,200,0,1)', 'rgba(152,198,70,1)', 'rgba(27,165,72,1)', 'rgba(0,156,166,1)', 'rgba(0,163,226,1)', 'rgba(0,87,184,1)', 'rgba(104,91,199,1)', 'rgba(180,0,158,1)', 'rgb(184,161,207)', 'rgb(230, 138, 184)', 'rgb(255, 192, 203)'];
@@ -135,6 +135,20 @@ function plot_box(crop, start, end) {
             .attr('stroke-width', line_width)
             .attr('stroke', line_color);
 
+        // draw outliers
+        if (outliers.length > 0) {
+            g.selectAll('.circles')
+                .data(outliers)
+                .enter()
+                .append('circle')
+                .attr('class', 'circle')
+                .attr('r', 3)
+                .attr('cx', d => x(d['市場名稱']))
+                .attr('cy', d => y(+d['平均價']))
+                .attr('fill', d => color(d['市場名稱']).replace('1)', '0.5)'))
+                .attr('stroke-width', line_width)
+                .attr('stroke', line_color.replace('1)', '0.6)'));
+
         // Show the min
         g.selectAll('.minLines')
             .data(sumstat)
@@ -162,19 +176,6 @@ function plot_box(crop, start, end) {
             .attr('stroke-width', line_width)
             .attr('stroke', line_color);
 
-        // draw outliers
-        if (outliers.length > 0) {
-            g.selectAll('.circles')
-                .data(outliers)
-                .enter()
-                .append('circle')
-                .attr('class', 'circle')
-                .attr('r', 3)
-                .attr('cx', d => x(d['市場名稱']))
-                .attr('cy', d => y(+d['平均價']))
-                .attr('fill', d => color(d['市場名稱']).replace('1)', '0.5)'))
-                .attr('stroke-width', line_width)
-                .attr('stroke', line_color.replace('1)', '0.5)'));
         }
     });
 }

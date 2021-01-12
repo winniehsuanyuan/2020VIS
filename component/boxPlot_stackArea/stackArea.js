@@ -8,15 +8,18 @@ const colors = ['rgba(228,27,19,1)', 'rgba(241,134,14,1)', 'rgba(253,200,0,1)', 
 var start_time = new Date(2012, 0, 1);
 var end_time = new Date(2019, 11, 31);
 
-function plot_stack(crop, start, end) {
+function plot_stack(crop, start, end, norm) {
     // clear the previous plot
     $("#stackArea").empty();
 
     let g = svg.append('g')
         .attr('transform', `translate(${margin.left},${margin.top})`);
-
+    var n;
+    console.log(norm);
+    if(norm) n = 'norm/';
+    else n = 'unnorm/';
     // Parse the Data
-    d3.csv('data/stackArea/dropped_norm/' + crop + '.csv').then(data => {
+    d3.csv('data/stackArea/dropped_'+ n + crop + '.csv').then(data => {
         data.forEach(d => {
             d.DateTime = d3.timeParse("%Y-%m-%d")(d.DateTime);
         });
@@ -77,7 +80,7 @@ function plot_stack(crop, start, end) {
         const legend = g.append('g')
             .attr('transform', `translate(${innerWidth+30}, 20)`);
         let i = 0;
-        markets.forEach(m => {
+        markets.reverse().forEach(m => {
             legend.append('circle').attr('cx', 0).attr('cy', i * 20).attr('r', 5)
                 .style('fill', color(m));
             legend.append('text').attr('x', 15).attr('y', i * 20).attr('class', 'legend')
