@@ -3,7 +3,13 @@ h1 {
 }
 
 #typhoon-timeline {
-    width: 94%;
+    shape-rendering: initial;
+}
+
+.y.axis text {
+    text-anchor: end;
+}
+
 .nav {
     background-color: white;
 }
@@ -19,4 +25,12 @@ h1 {
 
 #toolbar {
     border-bottom: 1px solid gainsboro;
+}
+
+html body#dummybodyid div.container div#nav-tabContent.tab-content div#nav-analysis.tab-pane.fade.show.active div#typhoon-timeline.row svg.timeline g g.y.axis g.row rect {
+    width: 1122px;
+}
+
+h4 {
+    margin-top: 1vh;
 }
