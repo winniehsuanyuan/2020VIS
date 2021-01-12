@@ -35,6 +35,10 @@ function plot_annual(crop) {
 
         var polar_layout = {
             showlegend: true,
+            legend: {
+                x: 20,
+                // y: 0
+            },
             // orientation: -90,
             polar: {
                 domain: {
@@ -50,6 +54,9 @@ function plot_annual(crop) {
                     ticktext: ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.'],
                     direction: "clockwise"
                 },
+            },
+            margin: {
+                l: 5
             }
         };
 
@@ -59,6 +66,10 @@ function plot_annual(crop) {
             },
             yaxis: {
                 title: '平均價 (元)',
+            },
+            showlegend: false,
+            margin: {
+                r: 10
             }
         };
 
