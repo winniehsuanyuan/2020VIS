@@ -4,4 +4,19 @@ h1 {
 
 #typhoon-timeline {
     width: 94%;
+.nav {
+    background-color: white;
+}
+
+.time-nav {
+    background-color: white;
+    padding-left: 0;
+}
+
+.nav-tab-crop {
+    padding-right: 0;
+}
+
+#toolbar {
+    border-bottom: 1px solid gainsboro;
 }
