@@ -23,6 +23,9 @@
     <link rel="stylesheet" href="css/interface.css">
     <link rel="stylesheet" href="component/time-range/time-range.css" type="text/css">
     <link rel="stylesheet" href="component/boxPlot_stackArea/index.css">
+    <link rel="stylesheet" href="component/calendar/calendar.css">
+    <link rel="stylesheet" href="component/pcp/pcp.css">
+    <link rel="stylesheet" href="css/interface.css">
 
 </head>
 
@@ -101,7 +104,39 @@
 
             <!-- weather page -->
             <div class="tab-pane fade" id="nav-weather" role="tabpanel" aria-labelledby="nav-weather-tab">
+                <!-- selector -->
+                <select name="selectCropYear" id="year"> 
+                    <option>2012</option>
+                    <option>2013</option>
+                    <option>2014</option>
+                    <option>2015</option>
+                    <option>2016</option>
+                    <option selected>2017</option>
+                    <option>2018</option>
+                    <option>2019</option>
+                </select>
+                <select name="selectWeather" id="weather"> 
+                    <option>氣溫</option>
+                    <option selected>氣壓</option>
+                    <option>降水量</option>
+                    <option>風速</option>
+                    <option>最大陣風</option>
+                </select>
 
+                <h1>Parallel Coordinates</h1>
+                <div class="row">
+                    <div class="col-9" id="pcp-div"></div>
+                    <div class="col-3" id="img-div"></div>
+                    <script src="component/pcp/pcp.js"></script>
+                </div>
+
+                <h1>Calendar Map</h1>
+                <div class="row">
+                    <!--<div id="calendar-legend"></div>-->
+                    <div id="calendar-div"></div>
+                    <script src="component/calendar/calendar.js"></script>
+                </div>
+                <script src="js/weather.js"></script>
             </div>
         </div>
 
