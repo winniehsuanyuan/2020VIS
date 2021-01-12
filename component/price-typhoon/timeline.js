@@ -6,7 +6,7 @@ $(document).ready(function() {
 function plot_typhoon(start, end) {
     d3.csv("data/typhoon.csv")
         .then(csv_data => {
-            let chart = d3.timeline();
+            let chart = d3.timeline().width(1122);
 
             let data = new Array();
             csv_data.forEach(row => {

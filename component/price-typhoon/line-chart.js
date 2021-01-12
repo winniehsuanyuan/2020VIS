@@ -24,6 +24,10 @@ function plot_line(crop, start, end) {
                 fixedrange: true,
                 overlaying: 'y'
             },
+            width: 1250,
+            margin: {
+                b: 25
+            }
         };
 
         Plotly.newPlot('all-year-graph', data, layout, {
