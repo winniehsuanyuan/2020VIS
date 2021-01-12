@@ -32,7 +32,9 @@ $(document).ready(function() {
     let data_file = CSV_FILE.replace('crop', crop);
 
     d3.csv(data_file, function(error, csv) {
-        if (error) throw error;
+        if (error) {
+            console.log(error);
+        }
 
         csv.forEach(r => {
             market_data[r['DateTime']] = r;
