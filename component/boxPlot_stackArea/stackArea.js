@@ -4,6 +4,7 @@ const height = +svg.attr('height');
 const margin = { top: 10, right: 80, bottom: 30, left: 80 }; //left150
 const innerWidth = width - margin.left - margin.right;
 const innerHeight = height - margin.top - margin.bottom;
+const newColors = ['rgba(199, 67, 70,1)','rgba(231, 111, 81,1)','rgba(244, 162, 97,1)','rgba(233, 196, 106,1)', 'rgba(138, 177, 125,1)', 'rgba(42, 157, 143,1)','rgba(38, 70, 83,1)','rgba(67, 69, 89,1)','rgba(96, 67, 95,1)','rgba(150, 109, 139,1)'];
 const colors = ['rgba(228,27,19,1)', 'rgba(241,134,14,1)', 'rgba(253,200,0,1)', 'rgba(152,198,70,1)', 'rgba(27,165,72,1)', 'rgba(0,156,166,1)', 'rgba(0,163,226,1)', 'rgba(0,87,184,1)', 'rgba(104,91,199,1)', 'rgba(180,0,158,1)', 'rgba(184,161,207,1)', 'rgba(230, 138, 184,1)', 'rgba(255, 192, 203,1)'];
 var start_time = new Date(2012, 0, 1);
 var end_time = new Date(2019, 11, 31);
@@ -60,7 +61,7 @@ function plot_stack(crop, start, end, norm) {
         // color palette
         var color = d3.scaleOrdinal()
             .domain(markets)
-            .range(colors);
+            .range(newColors);
 
         const hoverArea = function(h) {
             d3.selectAll('.layers','.legendCircle')

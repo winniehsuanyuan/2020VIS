@@ -13,6 +13,8 @@ function plot_box(crop, start, end) {
     let innerHeight = height - margin.top - margin.bottom;
     let colors = ['rgba(228,27,19,1)', 'rgba(241,134,14,1)', 'rgba(253,200,0,1)', 'rgba(152,198,70,1)', 'rgba(27,165,72,1)', 'rgba(0,156,166,1)', 'rgba(0,163,226,1)', 'rgba(0,87,184,1)', 'rgba(104,91,199,1)', 'rgba(180,0,158,1)', 'rgb(184,161,207)', 'rgb(230, 138, 184)', 'rgb(255, 192, 203)'];
 ;
+    let newColors = ['rgba(199, 67, 70,1)','rgba(231, 111, 81,1)','rgba(244, 162, 97,1)','rgba(233, 196, 106,1)', 'rgba(138, 177, 125,1)', 'rgba(42, 157, 143,1)','rgba(38, 70, 83,1)','rgba(67, 69, 89,1)','rgba(96, 67, 95,1)','rgba(150, 109, 139,1)'];
+
 
     let g = svg.append('g')
         .attr('transform', `translate(${margin.left},${margin.top})`);
@@ -74,7 +76,7 @@ function plot_box(crop, start, end) {
         // color palette
         var color = d3.scaleOrdinal()
           .domain(markets)
-          .range(colors);
+          .range(newColors);
         
         var tip = d3.tip().attr('class', 'd3-tip').direction('e').offset([0, 5])
             .html(function(d) {
