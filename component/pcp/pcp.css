@@ -37,5 +37,10 @@ text {
   position: absolute;
   left: 12px;
   top: 0px;
+  padding-left: 50px;
+}
+
+#colorImg {
+  padding-left:50px;
 }
 
