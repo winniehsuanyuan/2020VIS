@@ -54,6 +54,7 @@ function prepDataAll(rawData) {
         x: x,
         y: y,
         mode: 'lines',
+        line: {color: '277da1'},
         xaxis: 'x1',
         yaxis: 'y2',
         name: '平均價'
@@ -63,6 +64,7 @@ function prepDataAll(rawData) {
         x: x,
         y: v,
         type: 'bar',
+        marker: {color: 'f3722c'},
         yaxis: 'y1',
         xaxis: 'x1',
         name: '交易量'

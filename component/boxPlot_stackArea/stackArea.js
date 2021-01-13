@@ -1,7 +1,7 @@
 const svg = d3.select('#stackArea');
 const width = +svg.attr('width');
 const height = +svg.attr('height');
-const margin = { top: 10, right: 80, bottom: 30, left: 80 }; //left150
+const margin = { top: 10, right: 80, bottom: 30, left: 50 }; //left150
 const innerWidth = width - margin.left - margin.right;
 const innerHeight = height - margin.top - margin.bottom;
 const newColors = ['rgba(199, 67, 70,1)','rgba(231, 111, 81,1)','rgba(244, 162, 97,1)','rgba(233, 196, 106,1)', 'rgba(138, 177, 125,1)', 'rgba(42, 157, 143,1)','rgba(38, 70, 83,1)','rgba(67, 69, 89,1)','rgba(96, 67, 95,1)','rgba(150, 109, 139,1)'];

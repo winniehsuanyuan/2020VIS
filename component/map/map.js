@@ -34,6 +34,7 @@ $(document).ready(function() {
     let start = new Date(getUrlParameter('start'));
     let end = new Date(getUrlParameter('end'));
     let data_file = CSV_FILE.replace('crop', crop);
+    
 
     d3.csv(data_file, function(error, csv) {
         if (error) {
