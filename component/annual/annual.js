@@ -2,6 +2,16 @@ var rawDataURL = 'data/price/crop_avg.csv';
 var xField = 'DateTime';
 var yField = '平均價';
 var vField = '交易量';
+var anualColor = {
+    '2012': 'f94144',
+    '2013': 'f3722c',
+    '2014': 'f8961e',
+    '2015': 'f9c74f',
+    '2016': '90be6d',
+    '2017': '43aa8b',
+    '2018': '4d908e',
+    '2019': '277da1'
+}
 
 function plot_annual(crop) {
     let data_file = rawDataURL.replace('crop', crop);
@@ -19,6 +29,7 @@ function plot_annual(crop) {
                 r: year['y'],
                 theta: year['x'],
                 mode: 'lines',
+                line: { color: anualColor[year['name']] },
                 name: year['name'],
                 type: 'scatterpolar',
 
@@ -97,14 +108,14 @@ function prepData(rawData) {
 
         // store data by each year
         if (!(year in line_year_data)) {
-            line_year_data[year] = { 'x': new Array(date), 'y': new Array(datum[yField]), 'mode': 'lines', 'name': year };
+            line_year_data[year] = { 'x': new Array(date), 'y': new Array(datum[yField]), 'name': year, 'line': { 'color': anualColor[year] } };
         } else {
             line_year_data[year]['x'].push(date);
             line_year_data[year]['y'].push(datum[yField]);
         }
 
         if (!(year in polar_year_data)) {
-            polar_year_data[year] = { 'x': new Array(), 'y': new Array(), 'mode': 'lines', 'name': year };
+            polar_year_data[year] = { 'x': new Array(), 'y': new Array(), 'name': year };
         }
         polar_year_data[year]['x'].push(offset);
         polar_year_data[year]['y'].push(datum[yField]);
