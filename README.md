@@ -1,10 +1,18 @@
 # Data Visualization Final Project
-## Note
-* 各圖表 draft & 進度：https://hackmd.io/BfxLBt1MT8Kp5vKFpwDN0Q
-* 整合討論：https://hackmd.io/9yVy3HuJTNSjFhkttq0c9Q
+## 資料來源
+* 農產品交易資料：[農產品批發市場交易行情站](https://amis.afa.gov.tw/menu/VegMenuTransInfo.aspx)
+* 氣象觀測資料：[觀測資料查詢](https://e-service.cwb.gov.tw/HistoryDataQuery/index.jsp)
+* 颱風資料：[颱風資料庫](https://rdc28.cwb.gov.tw/)
 
-## Dependency
-安裝颱風 timeline 套件，在 repo 目錄執行：
+
+## 開啟網頁
+### HTTP server
 ```
-npm init --yes && npm install d3-gtimeline .
+python3 -m http.server [PORT]
 ```
+### 瀏覽器
+* 打開 `localhost:[PORT]` 即可看到頁面
+
+![](https://i.imgur.com/8Gs6sCa.png)
+
+![](https://i.imgur.com/SbvbWuT.png)
