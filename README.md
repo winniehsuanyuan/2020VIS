@@ -4,6 +4,8 @@
 * 氣象觀測資料：[觀測資料查詢](https://e-service.cwb.gov.tw/HistoryDataQuery/index.jsp)
 * 颱風資料：[颱風資料庫](https://rdc28.cwb.gov.tw/)
 
+## 相關專題
+[蔬果價格與漲跌幅預測](https://github.com/boyuchen0224/Vegetable_Price_Prediction)
 
 ## 開啟網頁
 ### HTTP server
